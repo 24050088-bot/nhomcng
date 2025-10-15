@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="son">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Portfolio - Ứng Dụng Bán Sách</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+   
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+
+        .portfolio-card-enter {
+            animation: fadeInScale 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .hover-lift {
+            transition: all 0.3s ease-in-out;
+        }
+        .hover-lift:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.2);
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+       
+
+        .max-screen {
+            max-width: 1400px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+
+
+
+
+    <div id="app" class="flex-grow flex flex-col">
+
+    </div>
+
+    <footer class="bg-gray-800 text-white p-4 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center text-sm">
+            <p>&copy; 2025 Team Book App. Design & Coded by Sơn, Mạnh, Lộc, Thi.</p>
+            <div class="flex space-x-4 mt-2 md:mt-0">
+                <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-300">
+                    <i data-lucide="mail" class="w-4 h-4 inline-block align-text-bottom mr-1"></i>Liên hệ
+                </a>
+                <a href="#" class="text-gray-400 hover:text-indigo-400 transition duration-300">
+                    <i data-lucide="briefcase" class="w-4 h-4 inline-block align-text-bottom mr-1"></i>Tuyển dụng
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        console.log("App ID:", appId);
+
+
+
+
+
+        const teamData = {
+            son: {
+                key: 'son', name: "Trần Ngọc Sơn", title: "IT", color: "bg-purple-600",
+                hometown: "Hà Nội", social: { facebook: "https://www.facebook.com/share/1FwpsmWTQ6/"},
+                bio: "lập trình viên, đam mê tối ưu hiệu suất và công nghệ Cloud.",
+                hobbies: ["Đọc sách khoa học viễn tưởng", "Chơi game chiến thuật", "Lập trình"],
+                skills: ["Node.js/Express", "Python (Django)", "AWS/Cloud", "MongoDB/SQL", "Microservices"],
+                projects: [
+                    { name: "Hệ thống quản lý kho sách thông minh", desc: "Tối ưu hóa quy trình nhập, xuất, và tồn kho bằng API hiệu suất cao." },
+                    { name: "Ứng dụng sách nói AI (Dự án đang làm)", desc: "Tích hợp Gemini API cho tóm tắt sách và chuyển văn bản thành giọng nói." }
+                ],
+                avatarPlaceholder: "sonavt.jpg",
+            },
+            manh: {
+                key: 'manh', name: "Nguyễn  Đức Mạnh", title: "Designer & Frontend Lead", color: "bg-pink-600",
+                hometown: "Bình Dương", social: { facebook: "https://www.facebook.com/share/17WZVwe9yU/"},
+                bio: "Mang đến trải nghiệm người dùng tuyệt vời thông qua thiết kế UI/UX và giao diện hiện đại, tập trung vào tính thẩm mỹ.",
+                hobbies: ["Ngủ", "Trò chơi điện tử"],
+                skills: ["Figma/Sketch", "React/Next.js", "Tailwind CSS/SCSS", "Animation Design", "Prototyping"],
+                projects: [
+                    { name: "Website bán sách hiện đại (UI/UX)", desc: "Thiết kế giao diện người dùng theo phong cách tối giản, đáp ứng đa nền tảng." },
+                    { name: "Thư viện Component (Dự án cá nhân)", desc: "Bộ sưu tập các component React tùy chỉnh, dễ tái sử dụng với hiệu ứng chuyển động mượt mà." }
+                ],
+                avatarPlaceholder: "manhavt.jpg"
+            },
+            loc: {
+                key: 'loc', name: "Nguyễn Tấn  Lộc", title: "Data Scientist & Analyst", color: "bg-emerald-600",
+                hometown: "Long An", social: { facebook: "https://www.facebook.com/share/16yUagmkQJ/"},
+                bio: "Phân tích dữ liệu bán hàng để đưa ra các chiến lược kinh doanh thông minh và dự đoán xu hướng thị trường sách.",
+                hobbies: ["Du lịch", "Thư giãn", "Game thủ"],
+                skills: ["Python (Pandas, ML)", "SQL/Database", "Machine Learning", "Data Visualization", "A/B Testing"],
+                projects: [
+                    { name: "Mô hình dự đoán xu hướng sách bán chạy", desc: "Xây dựng mô hình ML phân tích hành vi người dùng và dự đoán sách tiềm năng." },
+                    { name: "Dashboard hiệu suất sách", desc: "Trực quan hóa dữ liệu bán hàng theo thời gian thực (D3.js)." }
+                ],
+                avatarPlaceholder: "locavt.jpg"
+            },
+            thi: {
+                key: 'thi', name: "Đoàn Mai Thi", title: "Chuyên viên QA & Quản lý Dự án", color: "bg-amber-600",
+                hometown: "Bình Dương", social: { facebook: "https://www.facebook.com/share/17BuTh8be4/"},
+                bio: "Đảm bảo chất lượng sản phẩm và quản lý quy trình phát triển theo phương pháp Agile/Scrum, kiểm soát rủi ro dự án.",
+                hobbies: ["Xem Doraemon", "Jollibee", "Makeup"],
+                skills: ["Selenium/Cypress", "JIRA/Trello", "Testing Strategy", "Agile/Scrum", "User Story Mapping"],
+                projects: [
+                    { name: "Kịch bản kiểm thử tự động toàn diện", desc: "Phát triển bộ test case tự động cho toàn bộ chức năng mua bán sách." },
+                    { name: "Tài liệu quy trình QA chuẩn (Dự án nội bộ)", desc: "Xây dựng và chuẩn hóa quy trình QA cho toàn bộ đội ngũ phát triển." }
+                ],
+                avatarPlaceholder: "thiavt.jpg"
+            }
+        };
+
+
+
+
+        let currentView = 'home';
+        const appElement = document.getElementById('app');
+
+
+
+
+        function renderHeader(currentPage) {
+            const isHome = currentPage === 'home';
+            return `
+                <header class="bg-white shadow-lg sticky top-0 z-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                        <!-- Logo/Tên nhóm -->
+                        <h1 class="text-2xl font-extrabold text-indigo-700 tracking-wider flex items-center">
+                            <i data-lucide="book-open-text" class="inline-block w-7 h-7 mr-2 text-indigo-500 animate-[spin_4s_linear_infinite]"></i>
+                            <span class="hidden sm:inline">Team Book App</span>
+                            <span class="sm:hidden">TBA</span>
+                        </h1>
+                        <!-- Nút điều hướng -->
+                        ${!isHome ? `
+                            <button onclick="showHome()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full transition duration-300 shadow-md flex items-center transform hover:scale-105">
+                                <i data-lucide="home" class="w-4 h-4 mr-1"></i>
+                                Về Trang Nhóm
+                            </button>
+                        ` : ''}
+                    </div>
+                </header>
+            `;
+        }
+
+
+
+
+        function renderHomeView() {
+            const members = Object.values(teamData).map(member => `
+                <div class="bg-white p-6 rounded-2xl shadow-xl hover-lift transition duration-300 ease-in-out cursor-pointer flex flex-col items-center text-center border-t-4 ${member.color.replace('bg-', 'border-')}" onclick="showPortfolio('${member.key}')">
+                    <!-- Hình ảnh đại diện (giả định hình sách hoặc thành viên) -->
+                    <div class="w-24 h-24 ${member.color} rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-inner">
+                         <img src="${member.avatarPlaceholder}" alt="Avatar ${member.name}" class="rounded-full w-full h-full object-cover">
+                    </div>
+                   
+                    <h2 class="text-xl font-bold text-gray-900">${member.name}</h2>
+                    <p class="text-indigo-500 font-medium mb-3 text-sm">${member.title}</p>
+                    <p class="text-sm text-gray-600 line-clamp-3">${member.bio}</p>
+                   
+                    <button class="mt-4 text-sm text-indigo-600 hover:text-indigo-800 font-semibold flex items-center animate-pulse">
+                        <i data-lucide="arrow-right" class="w-4 h-4 mr-1"></i>
+                        Xem Hồ Sơ
+                    </button>
+                </div>
+            `).join('');
+
+
+
+
+            return `
+                ${renderHeader('home')}
+                <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+                    <section class="text-center mb-16 portfolio-card-enter">
+                        <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Đội Ngũ Sáng Lập Ứng Dụng Sách</h2>
+                        <p class="text-lg text-gray-600 max-w-4xl mx-auto">Chúng tôi là những chuyên gia từ nhiều lĩnh vực, cùng nhau xây dựng nền tảng đọc sách thế hệ mới. Click để xem portfolio chi tiết!</p>
+                    </section>
+                   
+                    <!-- Grid Layout cho danh sách thành viên -->
+                    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        ${members}
+                    </section>
+                </main>
+            `;
+        }
+
+
+
+
+        function renderPortfolioView(member) {
+            const projectsHtml = member.projects.map(p => `
+                <div class="p-4 bg-gray-50 rounded-lg shadow-sm transition duration-300 hover:shadow-md border-l-4 border-${member.color.replace('bg-', '')}">
+                    <h4 class="font-bold text-lg text-gray-800">${p.name}</h4>
+                    <p class="text-gray-500 text-sm mt-1">${p.desc}</p>
+                </div>
+            `).join('');
+
+
+
+
+            const skillsHtml = member.skills.map(skill => `
+                <span class="inline-block ${member.color.replace('bg-', 'bg-')}/20 text-gray-900 font-semibold px-4 py-1.5 rounded-full text-sm shadow-inner transition duration-200 hover:bg-opacity-30">${skill}</span>
+            `).join('');
+
+
+
+
+            const hobbiesHtml = member.hobbies.map(hobby => `
+                <li class="flex items-start text-gray-700 mb-2">
+                    <i data-lucide="book-open" class="w-5 h-5 mr-3 text-indigo-500 flex-shrink-0 mt-1"></i>
+                    ${hobby}
+                </li>
+            `).join('');
+
+                let images = [];
+                if (member.key === "son"){
+                     images = [
+                        "./images/chandung.jpg",
+                        "./images/cvson.jpg",
+                        "./images/dmson.jpg",
+                        "./images/lvnhom.jpg"
+                    ];
+                }
+                else if (member.key === "loc"){
+                    images = [
+                        "./images/chandungloc.jpg",
+                        "./images/6419286_data-analyst.jpg",
+                        "./images/faker-elleman-1.png",
+                        "./images/The-Difference-Between-a-Data-Analyst-and-a-Data-Scientist.png"
+                    ];
+                }       
+                else if (member.key === "manh"){
+                    images = [
+                        "./images/avtmanh.jpg",
+                        "./images/cvmanh.jpg",
+                        "./images/dmmanh.webp",
+                        "./images/FE+Tech+Lead+Frontend+in+Japan+(1).webp"
+                    ];
+                }
+                else if (member.key === "thi"){
+                    images = [
+                        "./images/chandungmthi.jpg",
+                        "./images/cvmthi.jpg",
+                        "./images/stmthi.png",
+                        "./images/lvnhommthi.jpeg"
+                    ];
+                }
+            const galleryHtml = images.map(src => `
+                <div class="aspect-w-4 aspect-h-3 overflow-hidden rounded-xl shadow-lg transition duration-300 hover:shadow-2xl">
+                    <img src="${src}" alt="Hình ảnh cá nhân/dự án" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+                </div>
+            `).join('');
+
+
+
+
+
+
+
+
+            return `
+                ${renderHeader('portfolio')}
+                <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow portfolio-card-enter">
+                   
+                    <!-- Header Profile - Dùng Flex Layout -->
+                    <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl mb-10 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-10 border-b-8 ${member.color.replace('bg-', 'border-')} transform translate-y-0">
+                        <div class="w-40 h-40 ${member.color} rounded-full flex-shrink-0 border-6 border-white shadow-xl p-1">
+                            <img src="${member.avatarPlaceholder}" alt="Avatar ${member.name}" class="rounded-full w-full h-full object-cover">
+                        </div>
+                        <div class="text-center md:text-left">
+                            <span class="text-sm font-semibold text-gray-500 uppercase tracking-widest">${member.title}</span>
+                            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mt-1">${member.name}</h2>
+                            <p class="text-lg text-gray-600 mt-3 max-w-2xl">${member.bio}</p>
+                           
+                            <div class="flex justify-center md:justify-start space-x-4 mt-5">
+                               
+                                <a href="${member.social.facebook}" target="_blank" class="text-gray-600 hover:text-blue-500 transition duration-300 hover:scale-110"><i data-lucide="facebook" class="w-7 h-7"></i></a>
+                            </div>
+                        </div>
+                       
+                        <!-- Nút Download CV -->
+                        <div class="md:ml-auto mt-6 md:mt-0">
+                             <a href="#" onclick="alert('Tính năng tải CV đang được phát triển!')" class="inline-flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 px-8 rounded-full shadow-2xl shadow-red-300 transform hover:scale-110 transition duration-300 ease-in-out whitespace-nowrap">
+                                <i data-lucide="download" class="w-5 h-5 mr-3 animate-bounce"></i>
+                                Tải CV (${member.name})
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Nội dung chi tiết - Dùng Grid Layout cho 2 cột chính -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                       
+                        <!-- Cột 1: Thông tin & Sở thích -->
+                        <div class="lg:col-span-1 space-y-8">
+                            <!-- Thông tin cơ bản -->
+                           <!-- Thông tin cơ bản -->
+<div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-indigo-500">
+    <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-4 flex items-center">
+        <i data-lucide="info" class="w-6 h-6 mr-3 text-indigo-500"></i> Chi Tiết
+    </h3>
+    <div class="space-y-3 text-gray-600">
+        <p class="flex items-center">
+            <i data-lucide="map-pin" class="w-5 h-5 mr-3 text-gray-400"></i> 
+            Quê quán: <span class="ml-2 font-medium text-gray-800">${member.hometown}</span>
+        </p>
+
+        <p class="flex items-center">
+            <i data-lucide="mail" class="w-5 h-5 mr-3 text-gray-400"></i> 
+            Email: <span class="ml-2 font-medium text-gray-800">
+                ${member.key === 'son' ? 'kaizokujhg@gmail.com' :
+                  member.key === 'manh' ? 'manhnguyen231206@gmail.com' :
+                  member.key === 'loc' ? 'ntl29122006@gmail.com' :
+                  member.key === 'thi' ? 'doanmaithi0609@gmail.com' :
+                  'team@bookapp.vn'}
+            </span>
+        </p>
+
+        <p class="flex items-center">
+            <i data-lucide="calendar" class="w-5 h-5 mr-3 text-gray-400"></i> 
+            Ngày Sinh: <span class="ml-2 font-medium text-gray-800">
+                ${member.key === 'son' ? '31/10/2006' :
+                  member.key === 'manh' ? '23/12/2006' :
+                  member.key === 'loc' ? '29/12/2006' :
+                  member.key === 'thi' ? '06/09/2006' :
+                  '2024'}
+            </span>
+        </p>
+    </div>
+</div>
+
+                           
+                            <!-- Sở thích -->
+                            <div class="bg-white p-6 rounded-2xl shadow-lg border-l-4 border-indigo-500">
+                                <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-4 flex items-center">
+                                    <i data-lucide="heart" class="w-6 h-6 mr-3 text-red-500"></i> Sở Thích Cá Nhân
+                                </h3>
+                                <ul class="list-none p-0 m-0 space-y-2">
+                                    ${hobbiesHtml}
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- Cột 2 & 3: Chuyên môn & Dự án & Hình ảnh -->
+                        <div class="lg:col-span-2 space-y-8">
+                           
+                            <!-- Chuyên môn/Kỹ năng -->
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-4 flex items-center">
+                                    <i data-lucide="tool" class="w-6 h-6 mr-3 text-indigo-500"></i> Chuyên Môn & Kỹ Năng
+                                </h3>
+                                <div class="flex flex-wrap gap-3">
+                                    ${skillsHtml}
+                                </div>
+                            </div>
+
+
+
+
+                            <!-- Dự án -->
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-4 flex items-center">
+                                    <i data-lucide="rocket" class="w-6 h-6 mr-3 text-indigo-500"></i> Dự Án (Đã & Đang Làm)
+                                </h3>
+                                <div class="space-y-4">
+                                    ${projectsHtml}
+                                </div>
+                            </div>
+                           
+                            <!-- Thư viện Hình ảnh - Dùng Grid Layout (2 cột) -->
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <h3 class="text-2xl font-bold text-gray-800 border-b pb-3 mb-4 flex items-center">
+                                    <i data-lucide="image" class="w-6 h-6 mr-3 text-indigo-500"></i> Thư Viện Hình Ảnh (Tối thiểu 4)
+                                </h3>
+                                <div class="grid grid-cols-2 sm:grid-cols-2 gap-4">
+                                    ${galleryHtml}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                   
+                </main>
+            `;
+        }
+       
+        function renderView(view, memberKey = null) {
+            let contentHtml = '';
+           
+            if (view === 'home') {
+                contentHtml = renderHomeView();
+                currentView = 'home';
+            } else if (view === 'portfolio' && memberKey) {
+                const member = teamData[memberKey];
+                if (member) {
+                    contentHtml = renderPortfolioView(member);
+                    currentView = 'portfolio';
+                } else {
+                    contentHtml = renderHomeView();
+                    currentView = 'home';
+                }
+            }
+
+
+
+
+            appElement.innerHTML = contentHtml;
+
+            lucide.createIcons();
+
+            window.scrollTo(0, 0);
+        }
+
+        window.showHome = function() {
+            renderView('home');
+        }
+
+        window.showPortfolio = function(memberKey) {
+            renderView('portfolio', memberKey);
+        }
+
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderView('home');
+        });
+
+
+
+
+    </script>
+</body>
+</html>
